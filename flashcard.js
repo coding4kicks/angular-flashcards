@@ -17,9 +17,12 @@ angular.module('flashcard').directive('flashcards', function() {
 
           flashcards = angular.element(element.children()[1]),
 
+          cards = [],
+
           card1 = angular.element(flashcards.children()[0]),
           card2 = angular.element(flashcards.children()[1]),
           card3 = angular.element(flashcards.children()[2]),
+          tempCard, 
 
           closebtn1 = angular.element(card1.children()[0]),
           content1 = angular.element(card1.children()[1]),
@@ -35,6 +38,10 @@ angular.module('flashcard').directive('flashcards', function() {
           content3 = angular.element(card3.children()[1]),
           nextbtn3 = angular.element(card3.children()[2]),
           answerbtn3 = angular.element(card3.children()[3]),
+
+          currentCard = card2,
+          nextCard = card1,
+          previousCard = card3,
 
           data = { 'title': 'testcards',
                    'cards': [
@@ -55,13 +62,12 @@ angular.module('flashcard').directive('flashcards', function() {
                    ]
                  },
 
-          cards = data.cards.length,
+          muberOfCards = data.cards.length,
 
           // flashcard showing state
           showing = false,
           answer = false;
 
-      alert(cards);
       // Set initial state
       card1.addClass("card-next");
       card3.addClass("card-previous");
@@ -82,6 +88,10 @@ angular.module('flashcard').directive('flashcards', function() {
       answerbtn3.bind('click', toggle_answer);
       nextbtn3.bind('click', next_question);
 
+      cards.push(card1);
+      cards.push(card2);
+      cards.push(card3);
+
       // Toggle the flashcards visibility
       function toggle_cards() {
         showing = !showing;
@@ -98,13 +108,19 @@ angular.module('flashcard').directive('flashcards', function() {
 
       // Move to the next question
       function next_question() {
-        card2.addClass("card-previous");
-        card1.removeClass("card-next");
-        card3.addClass("card-next");
-        card3.removeClass("card-previous");
+        currentCard.addClass("card-previous");
+        nextCard.removeClass("card-next");
+        previousCard.addClass("card-next");
+        previousCard.removeClass("card-previous");
 
-        setTimeout(function() {card3.removeClass("card-hide");}, 1000);
-        setTimeout(function() {card2.addClass("card-hide");}, 1000);
+        setTimeout(function() {previousCard.removeClass("card-hide");}, 1000);
+        setTimeout(function() {currentCard.addClass("card-hide");}, 1000);
+        setTimeout(function() {
+          tempCard = nextCard;
+          nextCard = previousCard;
+          previousCard = currentCard;
+          currentCard = tempCard;
+        }, 1000);
       }
 
       // initialize
@@ -113,3 +129,4 @@ angular.module('flashcard').directive('flashcards', function() {
     }
   }
 });
+

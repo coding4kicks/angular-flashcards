@@ -12,78 +12,98 @@ angular.module('flashcard').directive('flashcards', function() {
               '</div>',
 
     link: function(scope, element, attrs) {
-      // Flash Card Icon Element
-      var icon = angular.element(element.children()[0]),
 
+      var icon = angular.element(element.children()[0]),
           flashcards = angular.element(element.children()[1]),
           cards = [],
           currentCard,
           nextCard,
           previousCard,
-          tempCard, 
+          tempCard,
+          cardCounter, 
+          showing = false,
 
           data = { 'title': 'testcards',
                    'cards': [
-                     {'content': 'Here is some flash card content',
+                     {'question': 'Here is some flash card content',
                       'answer': 'This card has an answer'
                      },
-                     {'content': 'Again more flash card content',
+                     {'question': 'Again more flash card content',
                       'answer': 'With an answer too'
                      },
-                     {'content': 'This card has no answer'
+                     {'question': 'This card has no answer'
                      },
-                     {'content': 'More content',
+                     {'question': 'More content',
                       'answer': 'Another answer'
                      },
-                     {'content': 'The last one',
+                     {'question': 'The last one',
                       'answer': 'With an answer too'
                      }
                    ]
                  },
 
-          numberOfCards = data.cards.length,
+          numberOfCards = data.cards.length;
 
-          // flashcard showing state
-          showing = false,
-          answer = false;
 
       for(var i = 0; i < 3; i++) {
+        
         cards[i] = angular.element(flashcards.children()[i]);
         cards[i]['closebtn'] = angular.element(cards[i].children()[0]);        
         cards[i]['content'] = angular.element(cards[i].children()[1]);
         cards[i]['nextbtn'] = angular.element(cards[i].children()[2]);
         cards[i]['answerbtn'] = angular.element(cards[i].children()[3]);
+        cards[i].answerbtn.addClass('btn' + i); // hack: pass button id via class
+        cards[i]['data'] = '';    
+        cards[i]['answerShowing'] = false;
         cards[i].closebtn.bind('click', toggle_cards);
         cards[i].nextbtn.bind('click', next_question);
-        cards[i].answerbtn.bind('click', toggle_answer);
+
+        cards[i].answerbtn.bind('click', toggleAnswer);
       }
 
+      // Assign cards
       nextCard = cards[0];
       currentCard = cards[1];
       previousCard = cards[2];
 
+      // Initialize starting classes
       nextCard.addClass("card-next");
       previousCard.addClass("card-previous");
       previousCard.addClass("card-hide");
 
-      nextCard.content.text(data.cards[1].content);
-      currentCard.content.text(data.cards[0].content);
-      previousCard.content.text(data.cards[numberOfCards - 1].content);
+      // Initialize starting content
+      nextCard.data = data.cards[1];
+      nextCard.content.text(nextCard.data.question);
+      currentCard.data = data.cards[0];
+      currentCard.content.text(currentCard.data.question);
+      previousCard.data = data.cards[numberOfCards - 1];
+      previousCard.content.text(previousCard.data.question);
 
+      // Toggle the flashcards' visibility
       icon.bind('click', toggle_cards);
-
-      // Toggle the flashcards visibility
       function toggle_cards() {
         showing = !showing;
         flashcards.removeClass(showing ? 'cards-show' : 'cards-hide');
         flashcards.addClass(showing ? 'cards-hide' : 'cards-show');
       };
  
-      // Toggle between questions and answers
-      function toggle_answer() {
-        answer = !answer;
-        //content2.text(answer ? data.cards[0].content : data.cards[0].answer);
-       // answerbtn2.text(answer ? 'answer' : 'question');
+      // Toggle between questions and answers, uses class hack
+      function toggleAnswer() {
+        var classes = angular.element(this).attr('class');
+        if (classes.search('btn0') > 0) {
+          swapContent(cards[0]);
+        }
+        else if (classes.search('btn1') > 0) {
+          swapContent(cards[1]);
+        } 
+        else {
+          swapContent(cards[2]);
+        }
+        function swapContent(card) { 
+          card.content.text(card['answerShowing'] ? card.data.question : card.data.answer);
+          card.answerbtn.text(card['answerShowing'] ? 'answer' : 'question');
+          card['answerShowing'] = !card['answerShowing'];
+        }
       };
 
       // Move to the next question
@@ -105,7 +125,7 @@ angular.module('flashcard').directive('flashcards', function() {
       }
 
       // initialize
-      toggle_answer();
+      //toggle_answer();
       toggle_cards();
     }
   }

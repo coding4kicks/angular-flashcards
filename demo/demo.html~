@@ -8,7 +8,6 @@
   </head>
   <body ng-controller="DemoCtrl">
     <h2>Flash Cards</h2>
-    <div data-flashcards='data/demo.json'>{{testing}}</div>
-    <div data-flashcards='data/demo.json'>i</div>
+    <div data-flashcards='data/demo.json'>click here yo</div>
   </body>
 </html>

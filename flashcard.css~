@@ -34,13 +34,21 @@
   border: 1px solid #999;
   border-radius: 5px;
   outline: none;
-
-  /*&.fade {
-    .transition(e('opacity .3s linear, top .3s ease-out'));
-    top: -25%;
-  }
-  &.fade.in { top: 10%; }*/
+  -moz-transition:left 1s, margin-left 1s;
+  -webkit-transition:left 1s, margin-left 1s;
+  -o-transition:left 1s, margin-left 1s;
 }
+
+.card-previous {
+  left: 100%;
+  margin-left: 0px;
+}
+
+.card-next {
+  left: 0%;
+  margin-left: -590px;
+}
+
 
 .card-content {
   min-height: 200px;
@@ -54,10 +62,3 @@
   cursor: pointer;
 }
 
-.close-button {
-  float:right;
-  margin-right: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-}

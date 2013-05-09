@@ -2,7 +2,7 @@
 'use strict';
 angular.module('flashcard', []);
 
-angular.module('flashcard').directive('flashcards', function() {
+angular.module('flashcard').directive('flashcards', ['$http', function($http) {
   return {
     template: '<h3 class="flashcard-icon">click</h3>' +
               '<div class="cards-hide">' +
@@ -47,27 +47,35 @@ angular.module('flashcard').directive('flashcards', function() {
           cardCounter = 3, // 1 greater than next
           prevCounter,
           showing = false,
+          numberOfCards,
+          data = {};
+         // data = { 'title': 'Test Cards',
+         //          'cards': [
+         //            {'question': 'Here is some flash card content 1',
+         //             'answer': 'This card has an answer 1'
+         //            },
+         //            {'question': 'Again more flash card content 2',
+         //             'answer': 'With an answer too 2'
+         //            },
+         //            {'question': 'This card has no answer 3'
+         //            },
+         //            {'question': 'More content 4',
+         //             'answer': 'Another answer 4'
+         //            },
+         //            {'question': 'The last one 5',
+         //             'answer': 'With an answer too 5'
+         //            }
+         //          ]
+         //        },
 
-          data = { 'title': 'Test Cards',
-                   'cards': [
-                     {'question': 'Here is some flash card content 1',
-                      'answer': 'This card has an answer 1'
-                     },
-                     {'question': 'Again more flash card content 2',
-                      'answer': 'With an answer too 2'
-                     },
-                     {'question': 'This card has no answer 3'
-                     },
-                     {'question': 'More content 4',
-                      'answer': 'Another answer 4'
-                     },
-                     {'question': 'The last one 5',
-                      'answer': 'With an answer too 5'
-                     }
-                   ]
-                 },
+          
 
-          numberOfCards = data.cards.length;
+      var file = "data/demo.json";
+      $http.get(file)
+      .then(function(results){
+        data = results.data;
+        init_data();
+      });
 
 
       // Initialize cards array with objects on each card.
@@ -103,15 +111,18 @@ angular.module('flashcard').directive('flashcards', function() {
       previousCard.addClass("card-hide");
 
       // Initialize starting content
-      nextCard.data = data.cards[1];
-      nextCard.content.text(nextCard.data.question);
-      currentCard.data = data.cards[0];
-      currentCard.content.text(currentCard.data.question);
-      previousCard.data = data.cards[numberOfCards - 1];
-      previousCard.content.text(previousCard.data.question);
-      nextCard.cardNum.text(2)
-      currentCard.cardNum.text(1)
-      previousCard.cardNum.text(numberOfCards)
+      function init_data() {
+        numberOfCards = data.cards.length;
+        nextCard.data = data.cards[1];
+        nextCard.content.text(nextCard.data.question);
+        currentCard.data = data.cards[0];
+        currentCard.content.text(currentCard.data.question);
+        previousCard.data = data.cards[numberOfCards - 1];
+        previousCard.content.text(previousCard.data.question);
+        nextCard.cardNum.text(2)
+        currentCard.cardNum.text(1)
+        previousCard.cardNum.text(numberOfCards)
+      }
 
       // Toggle the flashcards' visibility
       icon.bind('click', toggle_cards);
@@ -209,5 +220,5 @@ angular.module('flashcard').directive('flashcards', function() {
       toggle_cards();
     }
   }
-});
+}]);
 

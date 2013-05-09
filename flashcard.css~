@@ -84,6 +84,7 @@
   display: inline-block;
   text-align: center;
   width: 95%;
+  margin-top: -5px;
 }
 
 .title>h3 {

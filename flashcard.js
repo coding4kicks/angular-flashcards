@@ -7,7 +7,7 @@ angular.module('flashcard').directive('flashcards', function() {
     template: '<h3 class="flashcard-icon">click</h3>' +
               '<div class="cards-hide">' +
                 '<div class="card">' +
-                  '<span class="card-num">2</span>' +
+                  '<span class="card-num"></span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
                   '<p class="card-content"></p>' + 
@@ -16,7 +16,7 @@ angular.module('flashcard').directive('flashcards', function() {
                   '<button class="card-button" type="button">Answer</button>' + 
                 '</div>' +
                 '<div class="card">' +
-                  '<span class="card-num">1</span>' +
+                  '<span class="card-num"></span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
                   '<p class="card-content"></p>' +
@@ -25,7 +25,7 @@ angular.module('flashcard').directive('flashcards', function() {
                   '<button class="card-button" type="button">Answer</button>' + 
                 '</div>' +
                 '<div class="card">' +
-                  '<span class="card-num">1</span>' +
+                  '<span class="card-num"></span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
                   '<p class="card-content"></p>' + 
@@ -44,7 +44,8 @@ angular.module('flashcard').directive('flashcards', function() {
           currentCard,
           previousCard,
           tempCard,
-          cardCounter = 3, 
+          cardCounter = 3, // 1 greater than next
+          prevCounter,
           showing = false,
 
           data = { 'title': 'Test Cards',
@@ -87,6 +88,7 @@ angular.module('flashcard').directive('flashcards', function() {
         cards[i].closebtn.bind('click', toggle_cards);
         cards[i].nextBtn.bind('click', next_question);
         cards[i].answerBtn.bind('click', toggleAnswer);
+        cards[i].previousBtn.bind('click', prev_question);
       }
 
       // Assign cards to states
@@ -96,6 +98,7 @@ angular.module('flashcard').directive('flashcards', function() {
 
       // Initialize starting classes
       nextCard.addClass("card-next");
+      nextCard.addClass("card-hide");
       previousCard.addClass("card-previous");
       previousCard.addClass("card-hide");
 
@@ -106,6 +109,9 @@ angular.module('flashcard').directive('flashcards', function() {
       currentCard.content.text(currentCard.data.question);
       previousCard.data = data.cards[numberOfCards - 1];
       previousCard.content.text(previousCard.data.question);
+      nextCard.cardNum.text(2)
+      currentCard.cardNum.text(1)
+      previousCard.cardNum.text(numberOfCards)
 
       // Toggle the flashcards' visibility
       icon.bind('click', toggle_cards);
@@ -136,6 +142,7 @@ angular.module('flashcard').directive('flashcards', function() {
 
       // Move to the next question
       function next_question() {
+        nextCard.removeClass("card-hide");
         currentCard.addClass("card-previous");
         nextCard.removeClass("card-next");
         previousCard.addClass("card-next");
@@ -147,12 +154,39 @@ angular.module('flashcard').directive('flashcards', function() {
           nextCard = previousCard;
           previousCard = currentCard;
           currentCard = tempCard;
-          nextCard.removeClass("card-hide");
           previousCard.addClass("card-hide");
           nextCard.cardNum.text(cardCounter);
           nextCard.data = data.cards[cardCounter-1];
           nextCard.content.text(nextCard.data.question);
           if (cardCounter++ >= numberOfCards) {cardCounter = 1;}
+        }, 1000);
+      }
+
+      // Move to the previous question
+      function prev_question() {
+        previousCard.removeClass("card-hide");
+        currentCard.addClass("card-next");
+        previousCard.removeClass("card-previous");
+        nextCard.addClass("card-previous");
+        nextCard.removeClass("card-next");
+
+        // After transition is complete, swap cards, make visible, adjust data.
+        setTimeout(function() {          
+          tempCard = previousCard;
+          previousCard = nextCard;
+          nextCard = currentCard;
+          currentCard = tempCard;
+          nextCard.addClass("card-hide");
+          if (cardCounter - 4 <= 0){
+            prevCounter = numberOfCards - (4 - cardCounter);
+          }
+          else {
+            prevCounter = cardCounter-4;
+          }
+          previousCard.cardNum.text(prevCounter);
+          previousCard.data = data.cards[prevCounter-1];
+          previousCard.content.text(previousCard.data.question);
+          if (cardCounter-- <= 1) {cardCounter = numberOfCards;}
         }, 1000);
       }
 

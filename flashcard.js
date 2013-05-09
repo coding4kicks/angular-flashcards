@@ -10,7 +10,8 @@ angular.module('flashcard').directive('flashcards', function() {
                   '<span class="card-num">2</span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
-                  '<p class="card-content"></p><button class="prev-button" type="button">Previous</button>' +
+                  '<p class="card-content"></p>' + 
+                  '<button class="prev-button" type="button">Previous</button>' +
                   '<button class="card-button" type="button">Next</button>' +
                   '<button class="card-button" type="button">Answer</button>' + 
                 '</div>' +
@@ -18,7 +19,8 @@ angular.module('flashcard').directive('flashcards', function() {
                   '<span class="card-num">1</span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
-                  '<p class="card-content"></p><button class="prev-button" type="button">Previous</button>' +
+                  '<p class="card-content"></p>' +
+                  '<button class="prev-button" type="button">Previous</button>' +
                   '<button class="card-button" type="button">Next</button>' +
                   '<button class="card-button" type="button">Answer</button>' + 
                 '</div>' +
@@ -26,7 +28,8 @@ angular.module('flashcard').directive('flashcards', function() {
                   '<span class="card-num">1</span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
-                  '<p class="card-content"></p><button class="prev-button" type="button">Previous</button>' +
+                  '<p class="card-content"></p>' + 
+                  '<button class="prev-button" type="button">Previous</button>' +
                   '<button class="card-button" type="button">Next</button>' +
                   '<button class="card-button" type="button">Answer</button>' + 
                 '</div>' +
@@ -70,20 +73,20 @@ angular.module('flashcard').directive('flashcards', function() {
         
         cards[i] = angular.element(flashcards.children()[i]);
         cards[i]['cardNum'] = angular.element(cards[i].children()[0]);
-        var div_holder = angular.element(cards[i].children()[1])
+        var div_holder = angular.element(cards[i].children()[1]);
         cards[i]['title'] = angular.element(div_holder.children()[0]);
         cards[i]['closebtn'] = angular.element(cards[i].children()[2]);
         cards[i]['content'] = angular.element(cards[i].children()[4]);
-        cards[i]['previousbtn'] = angular.element(cards[i].children()[5]);
-        cards[i]['nextbtn'] = angular.element(cards[i].children()[6]);
-        cards[i]['answerbtn'] = angular.element(cards[i].children()[7]);
-        cards[i].answerbtn.addClass('btn' + i); // hack: pass button id via class
+        cards[i]['previousBtn'] = angular.element(cards[i].children()[5]);
+        cards[i]['nextBtn'] = angular.element(cards[i].children()[6]);
+        cards[i]['answerBtn'] = angular.element(cards[i].children()[7]);
+        cards[i].answerBtn.addClass('btn' + i); // hack: pass button id via class
         cards[i]['title'].text(data.title);
         cards[i]['data'] = '';    
         cards[i]['answerShowing'] = false;
         cards[i].closebtn.bind('click', toggle_cards);
-        cards[i].nextbtn.bind('click', next_question);
-        cards[i].answerbtn.bind('click', toggleAnswer);
+        cards[i].nextBtn.bind('click', next_question);
+        cards[i].answerBtn.bind('click', toggleAnswer);
       }
 
       // Assign cards
@@ -126,7 +129,7 @@ angular.module('flashcard').directive('flashcards', function() {
         }
         function swapContent(card) { 
           card.content.text(card['answerShowing'] ? card.data.question : card.data.answer);
-          card.answerbtn.text(card['answerShowing'] ? 'answer' : 'question');
+          card.answerBtn.text(card['answerShowing'] ? 'answer' : 'question');
           card['answerShowing'] = !card['answerShowing'];
         }
       };
@@ -154,8 +157,7 @@ angular.module('flashcard').directive('flashcards', function() {
       }
 
       // initialize
-      //toggle_answer();
-      toggle_cards();
+     toggle_cards();
     }
   }
 });

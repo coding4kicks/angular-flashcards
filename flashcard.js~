@@ -10,7 +10,8 @@ angular.module('flashcard').directive('flashcards', function() {
                   '<span class="card-num">2</span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
-                  '<p class="card-content"></p><button class="prev-button" type="button">Previous</button>' +
+                  '<p class="card-content"></p>' + 
+                  '<button class="prev-button" type="button">Previous</button>' +
                   '<button class="card-button" type="button">Next</button>' +
                   '<button class="card-button" type="button">Answer</button>' + 
                 '</div>' +
@@ -18,7 +19,8 @@ angular.module('flashcard').directive('flashcards', function() {
                   '<span class="card-num">1</span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
-                  '<p class="card-content"></p><button class="prev-button" type="button">Previous</button>' +
+                  '<p class="card-content"></p>' +
+                  '<button class="prev-button" type="button">Previous</button>' +
                   '<button class="card-button" type="button">Next</button>' +
                   '<button class="card-button" type="button">Answer</button>' + 
                 '</div>' +
@@ -26,7 +28,8 @@ angular.module('flashcard').directive('flashcards', function() {
                   '<span class="card-num">1</span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
-                  '<p class="card-content"></p><button class="prev-button" type="button">Previous</button>' +
+                  '<p class="card-content"></p>' + 
+                  '<button class="prev-button" type="button">Previous</button>' +
                   '<button class="card-button" type="button">Next</button>' +
                   '<button class="card-button" type="button">Answer</button>' + 
                 '</div>' +
@@ -70,7 +73,7 @@ angular.module('flashcard').directive('flashcards', function() {
         
         cards[i] = angular.element(flashcards.children()[i]);
         cards[i]['cardNum'] = angular.element(cards[i].children()[0]);
-        var div_holder = angular.element(cards[i].children()[1])
+        var div_holder = angular.element(cards[i].children()[1]);
         cards[i]['title'] = angular.element(div_holder.children()[0]);
         cards[i]['closebtn'] = angular.element(cards[i].children()[2]);
         cards[i]['content'] = angular.element(cards[i].children()[4]);
@@ -147,18 +150,14 @@ angular.module('flashcard').directive('flashcards', function() {
           nextCard.removeClass("card-hide");
           previousCard.addClass("card-hide");
           nextCard.cardNum.text(cardCounter);
-          //alert(cardCounter);
-          //alert(data.cards[cardCounter-1].question);
           nextCard.data = data.cards[cardCounter-1];
           nextCard.content.text(nextCard.data.question);
-         // alert(nextCard.content);
           if (cardCounter++ >= numberOfCards) {cardCounter = 1;}
         }, 1000);
       }
 
       // initialize
-      //toggle_answer();
-      toggle_cards();
+     toggle_cards();
     }
   }
 });

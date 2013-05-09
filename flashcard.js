@@ -134,6 +134,7 @@ angular.module('flashcard').directive('flashcards', function() {
           swapContent(cards[2]);
         }
       };
+
       function swapContent(card) { 
         card.content.text(card['answerShowing'] ? card.data.question : card.data.answer);
         card.answerBtn.text(card['answerShowing'] ? 'answer' : 'question');
@@ -159,6 +160,12 @@ angular.module('flashcard').directive('flashcards', function() {
           nextCard.cardNum.text(cardCounter);
           nextCard.data = data.cards[cardCounter-1];
           nextCard.content.text(nextCard.data.question);
+          if (typeof nextCard.data.answer === "undefined") {
+            nextCard.answerBtn.addClass("button-hide");
+          }
+          else {
+            nextCard.answerBtn.removeClass("button-hide");
+          }
           if (cardCounter++ >= numberOfCards) {cardCounter = 1;}
         }, 1000);
       }
@@ -188,6 +195,12 @@ angular.module('flashcard').directive('flashcards', function() {
           previousCard.cardNum.text(prevCounter);
           previousCard.data = data.cards[prevCounter-1];
           previousCard.content.text(previousCard.data.question);
+          if (typeof previousCard.data.answer === "undefined") {
+            previousCard.answerBtn.addClass("button-hide");
+          }
+          else {
+            previousCard.answerBtn.removeClass("button-hide");
+          }
           if (cardCounter-- <= 1) {cardCounter = numberOfCards;}
         }, 1000);
       }

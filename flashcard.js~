@@ -134,6 +134,7 @@ angular.module('flashcard').directive('flashcards', function() {
           swapContent(cards[2]);
         }
       };
+
       function swapContent(card) { 
         card.content.text(card['answerShowing'] ? card.data.question : card.data.answer);
         card.answerBtn.text(card['answerShowing'] ? 'answer' : 'question');
@@ -172,7 +173,8 @@ angular.module('flashcard').directive('flashcards', function() {
         nextCard.removeClass("card-next");
 
         // After transition is complete, swap cards, make visible, adjust data.
-        setTimeout(function() {          
+        setTimeout(function() {
+          if (currentCard['answerShowing'] == true) {swapContent(currentCard);}          
           tempCard = previousCard;
           previousCard = nextCard;
           nextCard = currentCard;
@@ -187,6 +189,12 @@ angular.module('flashcard').directive('flashcards', function() {
           previousCard.cardNum.text(prevCounter);
           previousCard.data = data.cards[prevCounter-1];
           previousCard.content.text(previousCard.data.question);
+          if (typeof previousCard.data.answer === "undefined") {
+            previousCard.answerBtn.addClass("button-hide");
+          }
+          else {
+            previousCard.answerBtn.addClass("button-hide");
+          }
           if (cardCounter-- <= 1) {cardCounter = numberOfCards;}
         }, 1000);
       }

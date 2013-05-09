@@ -6,9 +6,30 @@ angular.module('flashcard').directive('flashcards', function() {
   return {
     template: '<h3 class="flashcard-icon">click</h3>' +
               '<div class="cards-hide">' +
-              '<div class="card"><span class="card-button">X</span><p class="card-content"></p><button class="card-button" type="button">Next</button><button class="card-button" type="button">Answer</button></div>' +
-              '<div class="card"><span class="card-button">X</span><p class="card-content"></p><button class="card-button" type="button">Next</button><button class="card-button" type="button">Answer</button></div>' +
-              '<div class="card"><span class="card-button">X</span><p class="card-content"></p><button class="card-button" type="button">Next</button><button class="card-button" type="button">Answer</button></div>' +
+                '<div class="card">' +
+                  '<span class="card-num">2</span>' +
+                  '<div class="title"><h3></h3></div>' +
+                  '<span class="card-button">X</span><hr />' +
+                  '<p class="card-content"></p><button class="prev-button" type="button">Previous</button>' +
+                  '<button class="card-button" type="button">Next</button>' +
+                  '<button class="card-button" type="button">Answer</button>' + 
+                '</div>' +
+                '<div class="card">' +
+                  '<span class="card-num">1</span>' +
+                  '<div class="title"><h3></h3></div>' +
+                  '<span class="card-button">X</span><hr />' +
+                  '<p class="card-content"></p><button class="prev-button" type="button">Previous</button>' +
+                  '<button class="card-button" type="button">Next</button>' +
+                  '<button class="card-button" type="button">Answer</button>' + 
+                '</div>' +
+                '<div class="card">' +
+                  '<span class="card-num">1</span>' +
+                  '<div class="title"><h3></h3></div>' +
+                  '<span class="card-button">X</span><hr />' +
+                  '<p class="card-content"></p><button class="prev-button" type="button">Previous</button>' +
+                  '<button class="card-button" type="button">Next</button>' +
+                  '<button class="card-button" type="button">Answer</button>' + 
+                '</div>' +
               '</div>',
 
     link: function(scope, element, attrs) {
@@ -20,24 +41,24 @@ angular.module('flashcard').directive('flashcards', function() {
           nextCard,
           previousCard,
           tempCard,
-          cardCounter, 
+          cardCounter = 3, 
           showing = false,
 
-          data = { 'title': 'testcards',
+          data = { 'title': 'Test Cards',
                    'cards': [
-                     {'question': 'Here is some flash card content',
-                      'answer': 'This card has an answer'
+                     {'question': 'Here is some flash card content 1',
+                      'answer': 'This card has an answer 1'
                      },
-                     {'question': 'Again more flash card content',
-                      'answer': 'With an answer too'
+                     {'question': 'Again more flash card content 2',
+                      'answer': 'With an answer too 2'
                      },
-                     {'question': 'This card has no answer'
+                     {'question': 'This card has no answer 3'
                      },
-                     {'question': 'More content',
-                      'answer': 'Another answer'
+                     {'question': 'More content 4',
+                      'answer': 'Another answer 4'
                      },
-                     {'question': 'The last one',
-                      'answer': 'With an answer too'
+                     {'question': 'The last one 5',
+                      'answer': 'With an answer too 5'
                      }
                    ]
                  },
@@ -48,16 +69,20 @@ angular.module('flashcard').directive('flashcards', function() {
       for(var i = 0; i < 3; i++) {
         
         cards[i] = angular.element(flashcards.children()[i]);
-        cards[i]['closebtn'] = angular.element(cards[i].children()[0]);        
-        cards[i]['content'] = angular.element(cards[i].children()[1]);
-        cards[i]['nextbtn'] = angular.element(cards[i].children()[2]);
-        cards[i]['answerbtn'] = angular.element(cards[i].children()[3]);
+        cards[i]['cardNum'] = angular.element(cards[i].children()[0]);
+        var div_holder = angular.element(cards[i].children()[1])
+        cards[i]['title'] = angular.element(div_holder.children()[0]);
+        cards[i]['closebtn'] = angular.element(cards[i].children()[2]);
+        cards[i]['content'] = angular.element(cards[i].children()[4]);
+        cards[i]['previousbtn'] = angular.element(cards[i].children()[5]);
+        cards[i]['nextbtn'] = angular.element(cards[i].children()[6]);
+        cards[i]['answerbtn'] = angular.element(cards[i].children()[7]);
         cards[i].answerbtn.addClass('btn' + i); // hack: pass button id via class
+        cards[i]['title'].text(data.title);
         cards[i]['data'] = '';    
         cards[i]['answerShowing'] = false;
         cards[i].closebtn.bind('click', toggle_cards);
         cards[i].nextbtn.bind('click', next_question);
-
         cards[i].answerbtn.bind('click', toggleAnswer);
       }
 
@@ -87,7 +112,7 @@ angular.module('flashcard').directive('flashcards', function() {
         flashcards.addClass(showing ? 'cards-hide' : 'cards-show');
       };
  
-      // Toggle between questions and answers, uses class hack
+      // Toggle between questions and answers, uses class hack to id btn/card
       function toggleAnswer() {
         var classes = angular.element(this).attr('class');
         if (classes.search('btn0') > 0) {
@@ -121,6 +146,10 @@ angular.module('flashcard').directive('flashcards', function() {
           currentCard = tempCard;
           nextCard.removeClass("card-hide");
           previousCard.addClass("card-hide");
+          nextCard.cardNum.text(cardCounter);
+          nextCard.data = data.cards[cardCounter-1];
+          nextCard.content.text(nextCard.data.question);
+          if (cardCounter++ >= numberOfCards) {cardCounter = 1;}
         }, 1000);
       }
 

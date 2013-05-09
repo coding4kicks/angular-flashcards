@@ -49,6 +49,9 @@
   margin-left: -590px;
 }
 
+.card-hide {
+  display: none;
+}
 
 .card-content {
   min-height: 200px;
@@ -61,4 +64,35 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.prev-button {
+  float:left;
+  margin-left: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.card-num {
+  float: left;
+  margin-left: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.title {
+  display: inline-block;
+  text-align: center;
+  width: 95%;
+}
+
+.title>h3 {
+  display: inline;
+  margin-left: 20px;
+}
+
+.card>hr {
+  margin-top: 0px;
+}
+
 

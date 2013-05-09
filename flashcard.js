@@ -133,12 +133,12 @@ angular.module('flashcard').directive('flashcards', function() {
         else {
           swapContent(cards[2]);
         }
-        function swapContent(card) { 
-          card.content.text(card['answerShowing'] ? card.data.question : card.data.answer);
-          card.answerBtn.text(card['answerShowing'] ? 'answer' : 'question');
-          card['answerShowing'] = !card['answerShowing'];
-        }
       };
+      function swapContent(card) { 
+        card.content.text(card['answerShowing'] ? card.data.question : card.data.answer);
+        card.answerBtn.text(card['answerShowing'] ? 'answer' : 'question');
+        card['answerShowing'] = !card['answerShowing'];
+      }
 
       // Move to the next question
       function next_question() {
@@ -150,6 +150,7 @@ angular.module('flashcard').directive('flashcards', function() {
 
         // After transition is complete, swap cards, make visible, adjust data.
         setTimeout(function() {
+          if (currentCard['answerShowing'] == true) {swapContent(currentCard);}
           tempCard = nextCard;
           nextCard = previousCard;
           previousCard = currentCard;

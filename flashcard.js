@@ -39,9 +39,9 @@ angular.module('flashcard').directive('flashcards', function() {
 
       var icon = angular.element(element.children()[0]),
           flashcards = angular.element(element.children()[1]),
-          cards = [],
-          currentCard,
+          cards = [], // 3 card objects representing 3 states: next, current, previous
           nextCard,
+          currentCard,
           previousCard,
           tempCard,
           cardCounter = 3, 
@@ -69,8 +69,8 @@ angular.module('flashcard').directive('flashcards', function() {
           numberOfCards = data.cards.length;
 
 
+      // Initialize cards array with objects on each card.
       for(var i = 0; i < 3; i++) {
-        
         cards[i] = angular.element(flashcards.children()[i]);
         cards[i]['cardNum'] = angular.element(cards[i].children()[0]);
         var div_holder = angular.element(cards[i].children()[1]);
@@ -80,7 +80,7 @@ angular.module('flashcard').directive('flashcards', function() {
         cards[i]['previousBtn'] = angular.element(cards[i].children()[5]);
         cards[i]['nextBtn'] = angular.element(cards[i].children()[6]);
         cards[i]['answerBtn'] = angular.element(cards[i].children()[7]);
-        cards[i].answerBtn.addClass('btn' + i); // hack: pass button id via class
+        cards[i].answerBtn.addClass('btn' + i); // 'class hack': pass button id via class
         cards[i]['title'].text(data.title);
         cards[i]['data'] = '';    
         cards[i]['answerShowing'] = false;
@@ -89,7 +89,7 @@ angular.module('flashcard').directive('flashcards', function() {
         cards[i].answerBtn.bind('click', toggleAnswer);
       }
 
-      // Assign cards
+      // Assign cards to states
       nextCard = cards[0];
       currentCard = cards[1];
       previousCard = cards[2];
@@ -115,7 +115,7 @@ angular.module('flashcard').directive('flashcards', function() {
         flashcards.addClass(showing ? 'cards-hide' : 'cards-show');
       };
  
-      // Toggle between questions and answers, uses class hack to id btn/card
+      // Toggle between questions and answers, uses 'class hack' to id btn/card
       function toggleAnswer() {
         var classes = angular.element(this).attr('class');
         if (classes.search('btn0') > 0) {
@@ -141,7 +141,7 @@ angular.module('flashcard').directive('flashcards', function() {
         previousCard.addClass("card-next");
         previousCard.removeClass("card-previous");
 
-        // After transition is complete, swap cards & make visible
+        // After transition is complete, swap cards, make visible, adjust data.
         setTimeout(function() {
           tempCard = nextCard;
           nextCard = previousCard;
@@ -157,7 +157,7 @@ angular.module('flashcard').directive('flashcards', function() {
       }
 
       // initialize
-     toggle_cards();
+      toggle_cards();
     }
   }
 });

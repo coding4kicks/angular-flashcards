@@ -172,7 +172,8 @@ angular.module('flashcard').directive('flashcards', function() {
         nextCard.removeClass("card-next");
 
         // After transition is complete, swap cards, make visible, adjust data.
-        setTimeout(function() {          
+        setTimeout(function() {
+          if (currentCard['answerShowing'] == true) {swapContent(currentCard);}          
           tempCard = previousCard;
           previousCard = nextCard;
           nextCard = currentCard;

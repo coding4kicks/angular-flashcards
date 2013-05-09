@@ -48,33 +48,23 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           prevCounter,
           showing = false,
           numberOfCards,
+          dataFile,
+          iconFile,
           data = {};
-         // data = { 'title': 'Test Cards',
-         //          'cards': [
-         //            {'question': 'Here is some flash card content 1',
-         //             'answer': 'This card has an answer 1'
-         //            },
-         //            {'question': 'Again more flash card content 2',
-         //             'answer': 'With an answer too 2'
-         //            },
-         //            {'question': 'This card has no answer 3'
-         //            },
-         //            {'question': 'More content 4',
-         //             'answer': 'Another answer 4'
-         //            },
-         //            {'question': 'The last one 5',
-         //             'answer': 'With an answer too 5'
-         //            }
-         //          ]
-         //        },
-
           
+      attrs.data ? dataFile = attrs.data : dataFile = 'data/data.json';
+      attrs.src ? iconFile = attrs.src : iconFile = 'src/icon.png';
 
-      var file = "data/demo.json";
-      $http.get(file)
+      //var file = "data/demo.json";
+      $http.get(dataFile)
       .then(function(results){
         data = results.data;
-        init_data();
+        if (typeof data.cards === "undefined") {
+            console.log("Error, bad url, no data recieved.");
+          }
+        else {
+          init_data();
+        }
       });
 
 

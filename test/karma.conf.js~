@@ -1,0 +1,13 @@
+basePath = '../';
+
+files = [
+  JASMINE,
+  JASMINE_ADAPTER,
+  'demo/lib/angular.js',
+  'flashcard.js',
+  'test/flashcardSpec.js'
+];
+
+autoWatch = true;
+
+browsers = ['Chrome'];

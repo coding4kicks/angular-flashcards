@@ -10,31 +10,31 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
                   '<span class="card-num"></span>' +
                   '<span class="num-cards"></span>' +
                   '<div class="title"><h3></h3></div>' +
-                  '<span class="card-button">X</span><hr />' +
+                  '<span class="close-button">X</span><hr />' +
                   '<p class="card-content"></p>' +
                   '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="card-button" type="button">Next</button>' +
-                  '<button class="card-button" type="button">Answer</button>' + 
+                  '<button class="next-button" type="button">Next</button>' +
+                  '<button class="answer-button" type="button">Answer</button>' + 
                 '</div>' +
                 '<div class="card">' +
                   '<span class="card-num"></span>' +
                   '<span class="num-cards"></span>' +
                   '<div class="title"><h3></h3></div>' +
-                  '<span class="card-button">X</span><hr />' +
+                  '<span class="close-button">X</span><hr />' +
                   '<p class="card-content"></p>' +
                   '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="card-button" type="button">Next</button>' +
-                  '<button class="card-button" type="button">Answer</button>' + 
+                  '<button class="next-button" type="button">Next</button>' +
+                  '<button class="answer-button" type="button">Answer</button>' + 
                 '</div>' +
                 '<div class="card">' +
                   '<span class="card-num"></span>' +
                   '<span class="num-cards"></span>' +
                   '<div class="title"><h3></h3></div>' +
-                  '<span class="card-button">X</span><hr />' +
+                  '<span class="close-button">X</span><hr />' +
                   '<p class="card-content"></p>' +
                   '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="card-button" type="button">Next</button>' +
-                  '<button class="card-button" type="button">Answer</button>' + 
+                  '<button class="next-button" type="button">Next</button>' +
+                  '<button class="answer-button" type="button">Answer</button>' + 
                 '</div>' +
               '</div>',
 

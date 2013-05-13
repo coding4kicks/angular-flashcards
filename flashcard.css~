@@ -50,15 +50,17 @@
 }
 
 .card-hide, .button-hide {
-  /*visibility: hidden;*/
-  display: none;
+  visibility: hidden;
+  /*display: none;*/
 }
 
 .card-content {
   min-height: 200px;
 }
 
-.card-button {
+.card-button, 
+.close-button, 
+.answer-button {
   float:right;
   margin-right: 5px;
   font-size: 14px;

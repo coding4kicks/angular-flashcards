@@ -26,13 +26,12 @@ describe('flashcard', function() {
                  {"question": "First Card Question",
                   "answer": "First Card Answer"
                  },
-                 {"question": "Second Card Question",
-                  "answer": "Second Card Answer"
+                 {"question": "Second Card Question"
                  },
                  {"question": "Third Card Question"
                  },
-                 {"question": "More content 4",
-                  "answer": "Another answer 4"
+                 {"question": "Second to Last Card Question",
+                  "answer": "Silly Irrelevent Answer"
                  },
                  {"question": "Last Card Question",
                   "answer": "Last Card Question"
@@ -252,4 +251,47 @@ describe('flashcard', function() {
     });  
   });
 
+  it('next button selects next card', function() {
+    var curr = angular.element(divs[3]),
+        next = angular.element(divs[1]),
+        prev = angular.element(divs[5]),
+        currCont = angular.element(curr.find('p')),
+        nextCont = angular.element(next.find('p')),
+        prevCont = angular.element(prev.find('p')),
+        prevBtn = curr.find('button')[0],
+        flag;
+
+    iconLink.click();
+    $httpBackend.flush();
+    expect(curr.hasClass('card-previous')).toBe(false);
+    expect(curr.hasClass('card-next')).toBe(false);
+    expect(next.hasClass('card-next')).toBe(true);
+    expect(prev.hasClass('card-previous')).toBe(true);
+    expect(currCont.text()).toBe('First Card Question');
+    expect(nextCont.text()).toBe('Second Card Question');
+    expect(prevCont.text()).toBe('Last Card Question');
+    expect(angular.element(prevBtn).hasClass('prev-button')).toBe(true);
+    prevBtn.click();
+    expect(curr.hasClass('card-next')).toBe(true);
+    expect(prev.hasClass('card-previous')).toBe(false);
+    expect(next.hasClass('card-next')).toBe(false);
+    expect(next.hasClass('card-previous')).toBe(true);
+
+    runs(function() {
+      flag = false;
+      setTimeout(function() {
+        flag = true;
+      }, 1001);    });
+
+    waitsFor(function() {
+      return flag;
+    }, "Third Card Question should be set", 1250);
+
+    runs(function() {
+      expect(currCont.text()).toBe('First Card Question');
+      expect(nextCont.text()).toBe('Second to Last Card Question');
+      expect(prevCont.text()).toBe('Last Card Question');
+    });  
+  });
+ 
 });

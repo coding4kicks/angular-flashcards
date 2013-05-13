@@ -41,6 +41,7 @@ describe('flashcard', function() {
   }));
 
   beforeEach(inject(function(_$httpBackend_, $rootScope, $compile) {
+
     elm = angular.element('<div flashcards data="data/test.json" src="img/icon.png">click here yo</div>');
     scope = $rootScope;
     $compile(elm)(scope);
@@ -262,7 +263,7 @@ describe('flashcard', function() {
     });  
   });
 
-  it('prev button selects prev card', function() {
+  it('next button selects next card', function() {
     var curr = angular.element(divs[3]),
         next = angular.element(divs[1]),
         prev = angular.element(divs[5]),

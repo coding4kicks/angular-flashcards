@@ -58,7 +58,7 @@
   min-height: 200px;
 }
 
-.card-button, 
+.next-button, 
 .close-button, 
 .answer-button {
   float:right;

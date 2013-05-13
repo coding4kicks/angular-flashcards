@@ -4,7 +4,7 @@ angular.module('flashcard', []);
 
 angular.module('flashcard').directive('flashcards', ['$http', function($http) {
   return {
-    template: '<h3 class="flashcard-icon">click</h3>' +
+    template: '<img src="" class="flashcard-icon" />' +
               '<div class="cards-hide">' +
                 '<div class="card">' +
                   '<span class="card-num"></span>' +
@@ -13,7 +13,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
                   '<span class="close-button">X</span><hr />' +
                   '<p class="card-content"></p>' +
                   '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="card-button" type="button">Next</button>' +
+                  '<button class="next-button" type="button">Next</button>' +
                   '<button class="answer-button" type="button">Answer</button>' + 
                 '</div>' +
                 '<div class="card">' +
@@ -23,7 +23,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
                   '<span class="close-button">X</span><hr />' +
                   '<p class="card-content"></p>' +
                   '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="card-button" type="button">Next</button>' +
+                  '<button class="next-button" type="button">Next</button>' +
                   '<button class="answer-button" type="button">Answer</button>' + 
                 '</div>' +
                 '<div class="card">' +
@@ -33,7 +33,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
                   '<span class="close-button">X</span><hr />' +
                   '<p class="card-content"></p>' +
                   '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="card-button" type="button">Next</button>' +
+                  '<button class="next-button" type="button">Next</button>' +
                   '<button class="answer-button" type="button">Answer</button>' + 
                 '</div>' +
               '</div>',
@@ -56,7 +56,9 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           data = {};
           
       attrs.data ? dataFile = attrs.data : dataFile = 'data/data.json';
-      attrs.src ? iconFile = attrs.src : iconFile = 'src/icon.png';
+      attrs.src ? iconFile = attrs.src : iconFile = 'img/card-icon.png';
+
+      icon.attr('src', iconFile);
 
       //var file = "data/demo.json";
       $http.get(dataFile)

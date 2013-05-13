@@ -4,7 +4,7 @@ angular.module('flashcard', []);
 
 angular.module('flashcard').directive('flashcards', ['$http', function($http) {
   return {
-    template: '<h3 class="flashcard-icon">click</h3>' +
+    template: '<img src="" class="flashcard-icon" />' +
               '<div class="cards-hide">' +
                 '<div class="card">' +
                   '<span class="card-num"></span>' +
@@ -47,7 +47,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           currentCard,
           previousCard,
           tempCard,
-          cardCounter = 3, // start 1 greater than next
+          cardCounter = 3, // init to 1 greater than next
           prevCounter,
           showing = false,
           numberOfCards,
@@ -56,7 +56,9 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           data = {};
           
       attrs.data ? dataFile = attrs.data : dataFile = 'data/data.json';
-      attrs.src ? iconFile = attrs.src : iconFile = 'src/icon.png';
+      attrs.src ? iconFile = attrs.src : iconFile = 'img/card-icon.png';
+
+      icon.attr('src', iconFile);
 
       //var file = "data/demo.json";
       $http.get(dataFile)

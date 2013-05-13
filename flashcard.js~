@@ -105,7 +105,6 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           cards[i]['title'].text(data.title);
           angular.element(cards[i].children()[1]).text(' / ' + numberOfCards);
         }
-
       }
 
       // Toggle the flashcards' visibility
@@ -135,7 +134,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
 
       function swapContent(card) { 
         card.content.text(card['answerShowing'] ? card.data.question : card.data.answer);
-        card.answerBtn.text(card['answerShowing'] ? 'answer' : 'question');
+        card.answerBtn.text(card['answerShowing'] ? 'Answer' : 'Question');
         card['answerShowing'] = !card['answerShowing'];
       }
 

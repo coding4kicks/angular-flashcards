@@ -43,19 +43,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
       attrs.src ? iconFile = attrs.src : iconFile = 'img/card-icon.png';
 
       icon.attr('src', iconFile);
-
-      function loadData() {
-        $http.get(dataFile)
-        .then(function(results){
-          data = results.data;
-          if (typeof data.cards === "undefined") {
-              console.log("Error, bad url, no data recieved.");
-            }
-          else {
-            init_data();
-          }
-        });
-      };
+      iconLink.bind('click', toggle_cards);
 
       // Initialize cards array with objects on each card.
       for(var i = 0; i < 3; i++) {
@@ -86,6 +74,19 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
       previousCard.addClass("card-previous");
       previousCard.addClass("card-hide");
 
+      function loadData() {
+        $http.get(dataFile)
+        .then(function(results){
+          data = results.data;
+          if (typeof data.cards === "undefined") {
+              console.log("Error, bad url, no data recieved.");
+            }
+          else {
+            init_data();
+          }
+        });
+      };
+
       // Initialize starting content
       function init_data() {
         numberOfCards = data.cards.length;
@@ -105,11 +106,9 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           cards[i]['title'].text(data.title);
           angular.element(cards[i].children()[1]).text(' / ' + numberOfCards);
         }
-
       }
 
       // Toggle the flashcards' visibility
-      iconLink.bind('click', toggle_cards);
       function toggle_cards() {
         if (typeof data === "undefined") {
           loadData();
@@ -135,7 +134,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
 
       function swapContent(card) { 
         card.content.text(card['answerShowing'] ? card.data.question : card.data.answer);
-        card.answerBtn.text(card['answerShowing'] ? 'answer' : 'question');
+        card.answerBtn.text(card['answerShowing'] ? 'Answer' : 'Question');
         card['answerShowing'] = !card['answerShowing'];
       }
 
@@ -202,9 +201,6 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           if (cardCounter-- <= 1) {cardCounter = numberOfCards;}
         }, 1000);
       }
-
-      // initialize
-      //toggle_cards();
     }
   }
 }]);

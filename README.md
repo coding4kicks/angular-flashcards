@@ -3,6 +3,7 @@
 A directive to insert flashcards into an Angular application.
 
 To use: 
+
 1.  Copy and paste flashcard.js into your angular code.
 2.  Copy and paste flashcard.css into your css code.
 3.  Copy the icon to your image folder, or use your own.
@@ -12,7 +13,7 @@ To use:
 ### Example Directive ###
     <div flashcards data='data/demo.json' src='img/card-icon.png'></div>
 
-### Example Json ###
+### Example JSON ###
     { "title": "Test Cards",
       "cards": [
        {"question": "Do I live a trivial life?",

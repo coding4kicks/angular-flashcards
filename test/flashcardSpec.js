@@ -67,6 +67,11 @@ describe('flashcard', function() {
     expect(span.length).toBe(9);
   });
 
+  it('should have 9 button elements', function() {
+    var btns = elm.find('button');
+    expect(btns.length).toBe(9);
+  });
+
   it('should be hidden onload', function() {
     var divs = elm.find('div');
     expect(angular.element(divs[0]).hasClass('cards-hide')).toBe(true);
@@ -152,5 +157,34 @@ describe('flashcard', function() {
     expect(angular.element(span[8]).text()).toBe('X');
   });
 
+  it('prev buttons should be set', function() {
+    var btns = elm.find('button');
+    expect(angular.element(btns[0]).hasClass('prev-button')).toBe(true);
+    expect(angular.element(btns[3]).hasClass('prev-button')).toBe(true);
+    expect(angular.element(btns[6]).hasClass('prev-button')).toBe(true);
+    expect(angular.element(btns[0]).text()).toBe('Previous');
+    expect(angular.element(btns[3]).text()).toBe('Previous');
+    expect(angular.element(btns[6]).text()).toBe('Previous');
+  });
+
+  it('next buttons should be set', function() {
+    var btns = elm.find('button');
+    expect(angular.element(btns[1]).hasClass('next-button')).toBe(true);
+    expect(angular.element(btns[4]).hasClass('next-button')).toBe(true);
+    expect(angular.element(btns[7]).hasClass('next-button')).toBe(true);
+    expect(angular.element(btns[1]).text()).toBe('Next');
+    expect(angular.element(btns[4]).text()).toBe('Next');
+    expect(angular.element(btns[7]).text()).toBe('Next');
+  });
+
+  it('answer buttons should be set', function() {
+    var btns = elm.find('button');
+    expect(angular.element(btns[2]).hasClass('answer-button')).toBe(true);
+    expect(angular.element(btns[5]).hasClass('answer-button')).toBe(true);
+    expect(angular.element(btns[8]).hasClass('answer-button')).toBe(true);
+    expect(angular.element(btns[2]).text()).toBe('Answer');
+    expect(angular.element(btns[5]).text()).toBe('Answer');
+    expect(angular.element(btns[8]).text()).toBe('Answer');
+  });
 
 });

@@ -27,7 +27,7 @@ describe('flashcard', function() {
                  {"question": "Second Card Question",
                   "answer": "Second Card Answer"
                  },
-                 {"question": "Card with no answer"
+                 {"question": "Third Card Question"
                  },
                  {"question": "More content 4",
                   "answer": "Another answer 4"
@@ -186,5 +186,55 @@ describe('flashcard', function() {
     expect(angular.element(btns[5]).text()).toBe('Answer');
     expect(angular.element(btns[8]).text()).toBe('Answer');
   });
+
+  it('next button selects next card', function() {
+    var divs = elm.find('div'),
+        curr = angular.element(divs[3]),
+        next = angular.element(divs[1]),
+        prev = angular.element(divs[5]),
+        currCont = angular.element(curr.find('p')),
+        nextCont = angular.element(next.find('p')),
+        prevCont = angular.element(prev.find('p')),
+        nextBtn = curr.find('button')[1];
+
+    $httpBackend.flush();
+    expect(curr.hasClass('card-previous')).toBe(false);
+    expect(curr.hasClass('card-next')).toBe(false);
+    expect(next.hasClass('card-next')).toBe(true);
+    expect(prev.hasClass('card-previous')).toBe(true);
+    expect(currCont.text()).toBe('First Card Question');
+    expect(nextCont.text()).toBe('Second Card Question');
+    expect(prevCont.text()).toBe('Last Card Question');
+    expect(angular.element(nextBtn).hasClass('next-button')).toBe(true);
+    nextBtn.click();
+    expect(curr.hasClass('card-previous')).toBe(true);
+    expect(next.hasClass('card-next')).toBe(false);
+    expect(prev.hasClass('card-previous')).toBe(false);
+    expect(prev.hasClass('card-next')).toBe(true);
+
+
+    waitsFor(function() {
+      //expect(currCont.text()).toBe('First Card Question');
+      //expect(nextCont.text()).toBe('Second Card Question');
+      //expect(prevCont.text()).toBe('Last Card Question');
+    }, "Third Card Question should be set", 1250);
+
+    
+  });
+
+  it('answer button selects answer content', function() {
+    var divs = elm.find('div'),
+        curr = angular.element(divs[3]),
+        currCont = angular.element(curr.find('p')),
+        answerBtn = curr.find('button')[2];
+
+    $httpBackend.flush();
+    expect(currCont.text()).toBe('First Card Question');
+    expect(angular.element(answerBtn).hasClass('answer-button')).toBe(true);
+    answerBtn.click();
+    expect(currCont.text()).toBe('First Card Answer');
+  });
+
+
 
 });

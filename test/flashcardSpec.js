@@ -47,9 +47,9 @@ describe('flashcard', function() {
     scope.$digest();
   }));
 
-  it('should have 4 h3 title elements', function() {
+  it('should have 3 h3 title elements', function() {
     var headers = elm.find('h3');
-    expect(headers.length).toBe(4);
+    expect(headers.length).toBe(3);
   });
 
   it('should have 7 div elements', function() {
@@ -96,13 +96,13 @@ describe('flashcard', function() {
 
   it('titles should be set correctly ', function() {
     var headers = elm.find('h3');
+    expect(angular.element(headers[0]).text()).toBe('');
     expect(angular.element(headers[1]).text()).toBe('');
     expect(angular.element(headers[2]).text()).toBe('');
-    expect(angular.element(headers[3]).text()).toBe('');
     $httpBackend.flush();
+    expect(angular.element(headers[0]).text()).toBe('Test Cards');
     expect(angular.element(headers[1]).text()).toBe('Test Cards');
     expect(angular.element(headers[2]).text()).toBe('Test Cards');
-    expect(angular.element(headers[3]).text()).toBe('Test Cards');
   });
 
   it('content should be set correctly ', function() {

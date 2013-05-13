@@ -213,11 +213,11 @@ describe('flashcard', function() {
     expect(prev.hasClass('card-next')).toBe(true);
 
 
-    waitsFor(function() {
+    //waitsFor(function() {
       //expect(currCont.text()).toBe('First Card Question');
       //expect(nextCont.text()).toBe('Second Card Question');
       //expect(prevCont.text()).toBe('Last Card Question');
-    }, "Third Card Question should be set", 1250);
+    //}, "Third Card Question should be set", 1250);
 
     
   });

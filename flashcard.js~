@@ -3,39 +3,20 @@
 angular.module('flashcard', []);
 
 angular.module('flashcard').directive('flashcards', ['$http', function($http) {
+  var card =    '<div class="card">' +
+                  '<span class="card-num"></span>' +
+                  '<span class="num-cards"></span>' +
+                  '<div class="title"><h3></h3></div>' +
+                  '<span class="close-button">X</span><hr />' +
+                  '<p class="card-content"></p>' +
+                  '<button class="prev-button" type="button">Previous</button>' +
+                  '<button class="next-button" type="button">Next</button>' +
+                  '<button class="answer-button" type="button">Answer</button>' + 
+                '</div>';
   return {
     template: '<img src="" class="flashcard-icon" />' +
               '<div class="cards-hide">' +
-                '<div class="card">' +
-                  '<span class="card-num"></span>' +
-                  '<span class="num-cards"></span>' +
-                  '<div class="title"><h3></h3></div>' +
-                  '<span class="close-button">X</span><hr />' +
-                  '<p class="card-content"></p>' +
-                  '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="next-button" type="button">Next</button>' +
-                  '<button class="answer-button" type="button">Answer</button>' + 
-                '</div>' +
-                '<div class="card">' +
-                  '<span class="card-num"></span>' +
-                  '<span class="num-cards"></span>' +
-                  '<div class="title"><h3></h3></div>' +
-                  '<span class="close-button">X</span><hr />' +
-                  '<p class="card-content"></p>' +
-                  '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="next-button" type="button">Next</button>' +
-                  '<button class="answer-button" type="button">Answer</button>' + 
-                '</div>' +
-                '<div class="card">' +
-                  '<span class="card-num"></span>' +
-                  '<span class="num-cards"></span>' +
-                  '<div class="title"><h3></h3></div>' +
-                  '<span class="close-button">X</span><hr />' +
-                  '<p class="card-content"></p>' +
-                  '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="next-button" type="button">Next</button>' +
-                  '<button class="answer-button" type="button">Answer</button>' + 
-                '</div>' +
+                card + card + card +
               '</div>',
 
     link: function(scope, element, attrs) {
@@ -47,7 +28,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           currentCard,
           previousCard,
           tempCard,
-          cardCounter = 3, // start 1 greater than next
+          cardCounter = 3, // init to 1 greater than next
           prevCounter,
           showing = false,
           numberOfCards,

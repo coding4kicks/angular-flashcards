@@ -74,7 +74,7 @@
   cursor: pointer;
 }
 
-.card-num {
+.card-num, .num-cards {
   float: left;
   margin-left: 5px;
   font-size: 14px;
@@ -84,7 +84,7 @@
 .title {
   display: inline-block;
   text-align: center;
-  width: 95%;
+  width: 86%;
   margin-top: -5px;
 }
 

@@ -8,15 +8,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
               '<div class="cards-hide">' +
                 '<div class="card">' +
                   '<span class="card-num"></span>' +
-                  '<div class="title"><h3></h3></div>' +
-                  '<span class="card-button">X</span><hr />' +
-                  '<p class="card-content"></p>' + 
-                  '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="card-button" type="button">Next</button>' +
-                  '<button class="card-button" type="button">Answer</button>' + 
-                '</div>' +
-                '<div class="card">' +
-                  '<span class="card-num"></span>' +
+                  '<span class="num-cards"></span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
                   '<p class="card-content"></p>' +
@@ -26,9 +18,20 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
                 '</div>' +
                 '<div class="card">' +
                   '<span class="card-num"></span>' +
+                  '<span class="num-cards"></span>' +
                   '<div class="title"><h3></h3></div>' +
                   '<span class="card-button">X</span><hr />' +
-                  '<p class="card-content"></p>' + 
+                  '<p class="card-content"></p>' +
+                  '<button class="prev-button" type="button">Previous</button>' +
+                  '<button class="card-button" type="button">Next</button>' +
+                  '<button class="card-button" type="button">Answer</button>' + 
+                '</div>' +
+                '<div class="card">' +
+                  '<span class="card-num"></span>' +
+                  '<span class="num-cards"></span>' +
+                  '<div class="title"><h3></h3></div>' +
+                  '<span class="card-button">X</span><hr />' +
+                  '<p class="card-content"></p>' +
                   '<button class="prev-button" type="button">Previous</button>' +
                   '<button class="card-button" type="button">Next</button>' +
                   '<button class="card-button" type="button">Answer</button>' + 
@@ -44,7 +47,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           currentCard,
           previousCard,
           tempCard,
-          cardCounter = 3, // 1 greater than next
+          cardCounter = 3, // start 1 greater than next
           prevCounter,
           showing = false,
           numberOfCards,
@@ -67,20 +70,19 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
         }
       });
 
-
       // Initialize cards array with objects on each card.
       for(var i = 0; i < 3; i++) {
         cards[i] = angular.element(flashcards.children()[i]);
         cards[i]['cardNum'] = angular.element(cards[i].children()[0]);
-        var div_holder = angular.element(cards[i].children()[1]);
-        cards[i]['title'] = angular.element(div_holder.children()[0]);
-        cards[i]['closebtn'] = angular.element(cards[i].children()[2]);
-        cards[i]['content'] = angular.element(cards[i].children()[4]);
-        cards[i]['previousBtn'] = angular.element(cards[i].children()[5]);
-        cards[i]['nextBtn'] = angular.element(cards[i].children()[6]);
-        cards[i]['answerBtn'] = angular.element(cards[i].children()[7]);
+        //var div_holder = angular.element(cards[i].children()[1]);
+        //cards[i]['title'] = angular.element(div_holder.children()[0]);
+        cards[i]['closebtn'] = angular.element(cards[i].children()[3]);
+        cards[i]['content'] = angular.element(cards[i].children()[5]);
+        cards[i]['previousBtn'] = angular.element(cards[i].children()[6]);
+        cards[i]['nextBtn'] = angular.element(cards[i].children()[7]);
+        cards[i]['answerBtn'] = angular.element(cards[i].children()[8]);
         cards[i].answerBtn.addClass('btn' + i); // 'class hack': pass button id via class
-        cards[i]['title'].text(data.title);
+        //cards[i]['title'].text(data.title);
         cards[i]['data'] = '';    
         cards[i]['answerShowing'] = false;
         cards[i].closebtn.bind('click', toggle_cards);
@@ -112,6 +114,14 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
         nextCard.cardNum.text(2)
         currentCard.cardNum.text(1)
         previousCard.cardNum.text(numberOfCards)
+
+        for(var i = 0; i < 3; i++) {
+          var div_holder = angular.element(cards[i].children()[2]);
+          cards[i]['title'] = angular.element(div_holder.children()[0]);
+          cards[i]['title'].text(data.title);
+          angular.element(cards[i].children()[1]).text(' / ' + numberOfCards);
+        }
+
       }
 
       // Toggle the flashcards' visibility

@@ -105,6 +105,10 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           cards[i]['title'] = angular.element(div_holder.children()[0]);
           cards[i]['title'].text(data.title);
           angular.element(cards[i].children()[1]).text(' / ' + numberOfCards);
+
+          if (typeof cards[i].data.answer === "undefined") {
+            cards[i].answerBtn.addClass("button-hide");
+          }
         }
       }
 

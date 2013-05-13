@@ -1,6 +1,6 @@
 'use strict';
 
-/* Test the flash cards directive. */
+/* Test the Angular flash cards directive. */
 
 describe('flashcard', function() {
 
@@ -191,6 +191,18 @@ describe('flashcard', function() {
     expect(angular.element(btns[8]).text()).toBe('Answer');
   });
 
+  it('answer button hides when no answer content', function() {
+    var curr = angular.element(divs[3]),
+        nextBtn = curr.find('button')[1];
+    expect(angular.element(btns[2]).hasClass('answer-button')).toBe(true);
+    expect(angular.element(btns[2]).text()).toBe('Answer');
+    expect(angular.element(btns[2]).hasClass('button-hide')).toBe(false);
+    iconLink.click();
+    $httpBackend.flush();
+    expect(angular.element(btns[2]).hasClass('button-hide')).toBe(false);
+  });
+
+
   it('answer button selects answer content', function() {
     var curr = angular.element(divs[3]),
         currCont = angular.element(curr.find('p')),
@@ -263,19 +275,19 @@ describe('flashcard', function() {
 
     iconLink.click();
     $httpBackend.flush();
-    //expect(curr.hasClass('card-previous')).toBe(false);
-    //expect(curr.hasClass('card-next')).toBe(false);
-    //expect(next.hasClass('card-next')).toBe(true);
-    //expect(prev.hasClass('card-previous')).toBe(true);
-    //expect(currCont.text()).toBe('First Card Question');
-    //expect(nextCont.text()).toBe('Second Card Question');
-    //expect(prevCont.text()).toBe('Last Card Question');
+    expect(curr.hasClass('card-previous')).toBe(false);
+    expect(curr.hasClass('card-next')).toBe(false);
+    expect(next.hasClass('card-next')).toBe(true);
+    expect(prev.hasClass('card-previous')).toBe(true);
+    expect(currCont.text()).toBe('First Card Question');
+    expect(nextCont.text()).toBe('Second Card Question');
+    expect(prevCont.text()).toBe('Last Card Question');
     expect(angular.element(prevBtn).hasClass('prev-button')).toBe(true);
     prevBtn.click();
-    //expect(curr.hasClass('card-next')).toBe(true);
-    //expect(prev.hasClass('card-previous')).toBe(false);
-    //expect(next.hasClass('card-next')).toBe(false);
-    //expect(next.hasClass('card-previous')).toBe(true);
+    expect(curr.hasClass('card-next')).toBe(true);
+    expect(prev.hasClass('card-previous')).toBe(false);
+    expect(next.hasClass('card-next')).toBe(false);
+    expect(next.hasClass('card-previous')).toBe(true);
 
     runs(function() {
       flag = false;
@@ -288,9 +300,9 @@ describe('flashcard', function() {
     }, "Third Card Question should be set", 1250);
 
     runs(function() {
-      //expect(currCont.text()).toBe('First Card Question');
-      //expect(nextCont.text()).toBe('Second to Last Card Question');
-      //expect(prevCont.text()).toBe('Last Card Question');
+      expect(currCont.text()).toBe('First Card Question');
+      expect(nextCont.text()).toBe('Second to Last Card Question');
+      expect(prevCont.text()).toBe('Last Card Question');
     });  
   });
  

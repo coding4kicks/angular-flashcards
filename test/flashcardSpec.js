@@ -1,6 +1,6 @@
 'use strict';
 
-/* Test the flash cards directive. */
+/* Test the Angular flash cards directive. */
 
 describe('flashcard', function() {
 
@@ -190,6 +190,18 @@ describe('flashcard', function() {
     expect(angular.element(btns[5]).text()).toBe('Answer');
     expect(angular.element(btns[8]).text()).toBe('Answer');
   });
+
+  it('answer button hides when no answer content', function() {
+    var curr = angular.element(divs[3]),
+        nextBtn = curr.find('button')[1];
+    expect(angular.element(btns[2]).hasClass('answer-button')).toBe(true);
+    expect(angular.element(btns[2]).text()).toBe('Answer');
+    expect(angular.element(btns[2]).hasClass('button-hide')).toBe(false);
+    iconLink.click();
+    $httpBackend.flush();
+    expect(angular.element(btns[2]).hasClass('button-hide')).toBe(true);
+  });
+
 
   it('answer button selects answer content', function() {
     var curr = angular.element(divs[3]),

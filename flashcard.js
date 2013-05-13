@@ -144,6 +144,10 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
 
       // Move to the next question
       function next_question() {
+
+        // disable next card's next button to prevent fast click through bug
+        nextCard['nextBtn'].attr('disabled', true);
+
         nextCard.removeClass("card-hide");
         currentCard.addClass("card-previous");
         nextCard.removeClass("card-next");
@@ -168,11 +172,19 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
             nextCard.answerBtn.removeClass("button-hide");
           }
           if (cardCounter++ >= numberOfCards) {cardCounter = 1;}
+
+          // Re-enable the next button
+          currentCard['nextBtn'].attr('disabled', false);
+
         }, 1000);
       }
 
       // Move to the previous question
       function prev_question() {
+
+        // disable prev card's prev button to prevent fast click through bug
+        previousCard['previousBtn'].attr('disabled', true);
+
         previousCard.removeClass("card-hide");
         currentCard.addClass("card-next");
         previousCard.removeClass("card-previous");
@@ -203,6 +215,10 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
             previousCard.answerBtn.removeClass("button-hide");
           }
           if (cardCounter-- <= 1) {cardCounter = numberOfCards;}
+
+          // Re-enable the next button
+          currentCard['previousBtn'].attr('disabled', false);
+
         }, 1000);
       }
     }

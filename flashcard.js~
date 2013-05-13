@@ -3,25 +3,28 @@
 angular.module('flashcard', []);
 
 angular.module('flashcard').directive('flashcards', ['$http', function($http) {
-  var card =    '<div class="card">' +
-                  '<span class="card-num"></span>' +
-                  '<span class="num-cards"></span>' +
-                  '<div class="title"><h3></h3></div>' +
-                  '<span class="close-button">X</span><hr />' +
-                  '<p class="card-content"></p>' +
-                  '<button class="prev-button" type="button">Previous</button>' +
-                  '<button class="next-button" type="button">Next</button>' +
-                  '<button class="answer-button" type="button">Answer</button>' + 
-                '</div>';
+
+  var card = '<div class="card">' +
+               '<span class="card-num"></span>' +
+               '<span class="num-cards"></span>' +
+               '<div class="title"><h3></h3></div>' +
+               '<span class="close-button">X</span><hr />' +
+               '<p class="card-content"></p>' +
+               '<button class="prev-button" type="button">Previous</button>' +
+               '<button class="next-button" type="button">Next</button>' +
+               '<button class="answer-button" type="button">Answer</button>' + 
+             '</div>';
+
   return {
-    template: '<img src="" class="flashcard-icon" />' +
+    template: '<a href=""><img src="" class="flashcard-icon" /></a>' +
               '<div class="cards-hide">' +
                 card + card + card +
               '</div>',
 
     link: function(scope, element, attrs) {
 
-      var icon = angular.element(element.children()[0]),
+      var iconLink = angular.element(element.children()[0]),
+          icon = angular.element(iconLink.children()[0]),
           flashcards = angular.element(element.children()[1]),
           cards = [], // 3 card objects representing 3 states: next, current, previous
           nextCard,
@@ -34,38 +37,36 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           numberOfCards,
           dataFile,
           iconFile,
-          data = {};
+          data;
           
       attrs.data ? dataFile = attrs.data : dataFile = 'data/data.json';
       attrs.src ? iconFile = attrs.src : iconFile = 'img/card-icon.png';
 
       icon.attr('src', iconFile);
 
-      //var file = "data/demo.json";
-      $http.get(dataFile)
-      .then(function(results){
-        data = results.data;
-        if (typeof data.cards === "undefined") {
-            console.log("Error, bad url, no data recieved.");
+      function loadData() {
+        $http.get(dataFile)
+        .then(function(results){
+          data = results.data;
+          if (typeof data.cards === "undefined") {
+              console.log("Error, bad url, no data recieved.");
+            }
+          else {
+            init_data();
           }
-        else {
-          init_data();
-        }
-      });
+        });
+      };
 
       // Initialize cards array with objects on each card.
       for(var i = 0; i < 3; i++) {
         cards[i] = angular.element(flashcards.children()[i]);
         cards[i]['cardNum'] = angular.element(cards[i].children()[0]);
-        //var div_holder = angular.element(cards[i].children()[1]);
-        //cards[i]['title'] = angular.element(div_holder.children()[0]);
         cards[i]['closebtn'] = angular.element(cards[i].children()[3]);
         cards[i]['content'] = angular.element(cards[i].children()[5]);
         cards[i]['previousBtn'] = angular.element(cards[i].children()[6]);
         cards[i]['nextBtn'] = angular.element(cards[i].children()[7]);
         cards[i]['answerBtn'] = angular.element(cards[i].children()[8]);
         cards[i].answerBtn.addClass('btn' + i); // 'class hack': pass button id via class
-        //cards[i]['title'].text(data.title);
         cards[i]['data'] = '';    
         cards[i]['answerShowing'] = false;
         cards[i].closebtn.bind('click', toggle_cards);
@@ -108,11 +109,14 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
       }
 
       // Toggle the flashcards' visibility
-      icon.bind('click', toggle_cards);
+      iconLink.bind('click', toggle_cards);
       function toggle_cards() {
-        showing = !showing;
+        if (typeof data === "undefined") {
+          loadData();
+        }
         flashcards.removeClass(showing ? 'cards-show' : 'cards-hide');
         flashcards.addClass(showing ? 'cards-hide' : 'cards-show');
+        showing = !showing;
       };
  
       // Toggle between questions and answers, uses 'class hack' to id btn/card
@@ -200,7 +204,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
       }
 
       // initialize
-      toggle_cards();
+      //toggle_cards();
     }
   }
 }]);

@@ -1,6 +1,7 @@
 { "title": "Test Cards",
   "cards": [
-   {"question": "Here is some flash card content 1"
+   {"question": "Here is some flash card content 1",
+    "answer": "This card has an answer 1"
    },
    {"question": "Again more flash card content 2",
     "answer": "With an answer too 2"

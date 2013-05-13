@@ -1,12 +1,4 @@
 /* Angular Flash Cards CSS */
-.flashcard-icon {
-  font-weight: bold;
-}
-
-.flashcard-icon:hover {
-  cursor: pointer;
-}
-
 .cards-show {
   position: fixed;
   top: 0;

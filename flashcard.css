@@ -1,6 +1,7 @@
 /* Angular Flash Cards CSS */
 .flashcard-icon:hover {
-  cursor: pointer;
+  width: 25px;
+  height: 20px;
 }
 
 .cards-show {

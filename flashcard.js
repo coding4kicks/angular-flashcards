@@ -39,7 +39,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
           iconFile,
           data;
           
-      attrs.data ? dataFile = attrs.data : dataFile = 'data/data.json';
+      //attrs.data ? dataFile = attrs.data : dataFile = 'data/data.json';
       attrs.src ? iconFile = attrs.src : iconFile = 'img/card-icon.png';
 
       icon.attr('src', iconFile);
@@ -75,6 +75,7 @@ angular.module('flashcard').directive('flashcards', ['$http', function($http) {
       previousCard.addClass("card-hide");
 
       function loadData() {
+        dataFile = attrs.data;
         $http.get(dataFile)
         .then(function(results){
           data = results.data;
